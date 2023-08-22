@@ -1,8 +1,13 @@
 /* eslint-disable react/prop-types */
 import Cards from "./cards";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import RecipeContainer from "./recipeContainer";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { auth, db } from "/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {addDoc, collection, serverTimestamp} from "firebase/firestore"
+import { DrinksContext } from "../DrinksProvider";
 
 export default function CardContainer({ drinks }) {
   const [firstChoice, setFirstChoice] = useState();
@@ -10,6 +15,11 @@ export default function CardContainer({ drinks }) {
   const [match, setMatch] = useState([]);
   const [count, setCount] = useState(0);
   const [openCards, setOpenCards] = useState(true);
+  const [savedDrinks, setSavedDrinks] = useState(null)
+
+  const storedDrinks = useContext(DrinksContext)
+
+  const [user, loading] = useAuthState(auth)
 
   function handleChoice(id) {
     firstChoice ? setSecondChoice(parseInt(id)) : setFirstChoice(parseInt(id));
@@ -18,6 +28,27 @@ export default function CardContainer({ drinks }) {
   function handleOpen() {
     setOpenCards(!openCards);
   }
+
+  function saveDrinks (name) {
+    let savedDrink = drinks.filter((i) => i[0].strDrink === name)
+    let newMap = new Map();
+      savedDrink.forEach((item) => newMap.set(item[0].idDrink, item));
+      savedDrink = [...[...newMap.values()]];
+      setSavedDrinks(savedDrink[0])
+  }
+
+  async function postDrink () {
+    const collectionRef = collection(db, "drinks")
+    await addDoc(collectionRef, {savedDrinks, timestamp: serverTimestamp(), user: user.uid, avatar: user.photoURL, username: user.displayName})
+  }
+
+  useEffect (() => {
+    if (savedDrinks != null && user) {
+      postDrink()
+    }
+    setSavedDrinks(null)
+},[savedDrinks])
+
 
   useEffect(() => {
     if (firstChoice && secondChoice) {
@@ -33,6 +64,7 @@ export default function CardContainer({ drinks }) {
       }
     }
   }, [firstChoice, secondChoice, match]);
+
 
   return (
     <div className="holder">
@@ -57,7 +89,11 @@ export default function CardContainer({ drinks }) {
           );
         })}
       </div>
+      {user && (<div className="savedDrinks">
+     <Link to="recipes" className="recipesLink">Saved drinks</Link>
+      </div>)}
       <RecipeContainer
+        saveDrinks={saveDrinks}
         handleOpen={handleOpen}
         openCards={openCards}
         match={match}
