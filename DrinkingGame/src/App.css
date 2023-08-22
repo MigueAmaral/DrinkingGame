@@ -25,8 +25,8 @@
 
 .count {
   position: absolute;
-  top:2rem;
-  left: 8rem;
+  top:-1rem;
+  left: -1rem;
   background-color: rgba(0, 255, 255, 0.506);
   width: 2.5rem;
   height: 2.5rem;
@@ -61,6 +61,7 @@
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
+  position: relative;
 }
 
 .header {
@@ -223,6 +224,12 @@
   margin-bottom: 0.5rem;
 }
 
+.instructionsExtra {
+  display: grid;
+  grid-template-columns: 1fr 5%;
+  align-items: flex-end;
+}
+
 .recipeCard ul {
   margin-bottom: 0.3rem;
   list-style: none;
@@ -231,4 +238,30 @@
 
 .closedCardImg {
   width: 12.5%;
+}
+
+.savedDrinks {
+  position: absolute;
+  top: -35px;
+  right: 75px;
+  background-color: #ffffff4f;
+  border-radius: 1rem;
+  padding-block: 0.1rem;
+  padding-inline: 0.5rem;
+  border: #ffffffb5;
+  font-family: "Poppins", sans-serif;
+  color: #5d5d5d;
+  transition: all 300ms ease-in-out;
+}
+
+.recipesLink {
+  text-decoration: none;
+  color: #484848ce;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.savedDrinks:hover {
+  background-color:#ffc0cb;
 }

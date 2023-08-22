@@ -6,6 +6,7 @@ import LoadingScreen from "./Components/LoadingScreen";
 import axios, { all } from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 function App() {
   const [drinkCollection, setDrinkCollection] = useState([]);
@@ -22,15 +23,18 @@ function App() {
       uniqueDrinks = [...[...newMap.values()]];
 
       if (uniqueDrinks.length > 0 && uniqueDrinks.length < 8) {
-        console.log("check");
         const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
         setTimeout(() => {
           axios.get(url).then((data) => {
             uniqueDrinks.push(data.data.drinks);
           });
         }, "100");
+        setTimeout(() => {
+          axios.get(url).then((data) => {
+            uniqueDrinks.push(data.data.drinks);
+          });
+        }, "250");
       } else if (uniqueDrinks.length > 8) {
-        console.log("check2");
         uniqueDrinks.length = 8;
       }
       setDrinkCollection([...uniqueDrinks, ...uniqueDrinks]);
@@ -46,19 +50,13 @@ function App() {
     }, "1");
     axios.get(url).then((data) => {
       drinkCatalogue = [...drinkCatalogue, data.data.drinks];
-    }, "150");
+    }, "200");
 
     setTimeout(() => {
       axios.get(url).then((data) => {
         drinkCatalogue = [...drinkCatalogue, data.data.drinks];
       });
-    }, "300");
-
-    setTimeout(() => {
-      axios.get(url).then((data) => {
-        drinkCatalogue = [...drinkCatalogue, data.data.drinks];
-      });
-    }, "450");
+    }, "400");
 
     setTimeout(() => {
       axios.get(url).then((data) => {
@@ -70,39 +68,49 @@ function App() {
       axios.get(url).then((data) => {
         drinkCatalogue = [...drinkCatalogue, data.data.drinks];
       });
-    }, "750");
+    }, "800");
 
     setTimeout(() => {
       axios.get(url).then((data) => {
         drinkCatalogue = [...drinkCatalogue, data.data.drinks];
       });
-    }, "900");
-
-    setTimeout(() => {
-      axios.get(url).then((data) => {
-        drinkCatalogue = [...drinkCatalogue, data.data.drinks];
-      });
-    }, "1050");
+    }, "1000");
 
     setTimeout(() => {
       axios.get(url).then((data) => {
         drinkCatalogue = [...drinkCatalogue, data.data.drinks];
       });
     }, "1200");
+
+    setTimeout(() => {
+      axios.get(url).then((data) => {
+        drinkCatalogue = [...drinkCatalogue, data.data.drinks];
+      });
+    }, "1400");
+
+    setTimeout(() => {
+      axios.get(url).then((data) => {
+        drinkCatalogue = [...drinkCatalogue, data.data.drinks];
+      });
+    }, "1600");
+
+    setTimeout(() => {
+      axios.get(url).then((data) => {
+        drinkCatalogue = [...drinkCatalogue, data.data.drinks];
+      });
+    }, "1800");
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setModal(!modal);
-    }, "3000");
-  }, []);
+  function closeModal() {
+    setModal(!modal);
+  }
 
   const shuffledDrinks = _.shuffle(drinkCollection);
 
   return (
     <div className="main">
       <AnimatePresence>
-      {modal && <LoadingScreen key={"loading"} />}
+        {modal && <LoadingScreen key={"loading"} closeModal={closeModal} />}
       </AnimatePresence>
       <div className="header">
         <h1 className="title">BARTHOLOMEW</h1>

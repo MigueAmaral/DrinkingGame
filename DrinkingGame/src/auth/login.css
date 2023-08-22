@@ -1,0 +1,20 @@
+.login {
+    padding: 2rem;
+    display: flex;
+    flex-direction:column;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.677);
+    box-shadow: 5px 5px 5px rgba(110, 110, 110, 0.391);
+    font-family: "Poppins", sans-serif;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    color: rgb(104, 104, 104);
+}
+
+.login button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: aliceblue;
+}

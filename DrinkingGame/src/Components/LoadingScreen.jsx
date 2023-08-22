@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import "./LoadingScreen.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
-export default function LoadingScreen() {
+export default function LoadingScreen({closeModal}) {
   return (
     <motion.div
       exit={{ opacity:0.5, y: -2000 }}
@@ -16,7 +18,7 @@ export default function LoadingScreen() {
           transition={{ duration: 3, repeat: Infinity, repeatType: "mirror" }}
           className="loadingImg"
         >
-          <img src="src/assets/Group 1-5.svg" alt="" srcset="" />
+          <img src="src/assets/Group 1-5.svg" alt="" />
         </motion.div>
         <motion.h2
           initial={{ opacity: 0 }}
@@ -27,6 +29,10 @@ export default function LoadingScreen() {
         >
           Loading up some nice beverages...
         </motion.h2>
+        <div className="buttons">
+          <button onClick={() => closeModal()}>I want to earn drinks</button>
+          <Link to="/auth/login"><button onClick={() => closeModal()}>I want to see my drinks</button></Link>
+        </div>
       </div>
     </motion.div>
   );

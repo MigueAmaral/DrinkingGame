@@ -39,3 +39,23 @@
     width: 100%;
     height: 100%;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.buttons button {
+  background-color: #ffffff4f;
+  padding: 0.8rem;
+  border: #ffffffb5;
+  font-family: "Poppins", sans-serif;
+  color: #5d5d5d;
+}
+
+
+.buttons button:hover {
+  background-color:#ffc0cb;
+}

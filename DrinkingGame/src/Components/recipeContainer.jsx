@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import RecipeCard from "./recipeCard";
 import { motion } from "framer-motion";
 
-export default function RecipeContainer({ drinks, match, handleOpen, openCards }) {
+export default function RecipeContainer({ drinks, match, handleOpen, openCards, saveDrinks}) {
   const [filteredDrinks, setFilteredDrinks] = useState([]);
- 
 
   useEffect(() => {
     if (drinks) {
@@ -25,7 +24,6 @@ export default function RecipeContainer({ drinks, match, handleOpen, openCards }
         return indexA - indexB;
       });
       setFilteredDrinks(matchSorted.reverse());
-      console.log(matchDrinksSorted);
     }
   }, [match]);
 
@@ -46,6 +44,7 @@ export default function RecipeContainer({ drinks, match, handleOpen, openCards }
         let instructions = i[0].strInstructions;
         return (
           <RecipeCard
+            saved = {saveDrinks}
             handleOpen={handleOpen}
             openCards = {openCards}
             key={drink}
